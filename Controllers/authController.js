@@ -1,7 +1,7 @@
 
-
 import User from "../models/UserModel.js";
-
+import { StatusCodes } from "http-status-codes";
+import { hashPassword } from "../utils/passwordUtils.js";
 
 export const register = async (req, res) => {
   const isFirstAccount = (await User.countDocuments()) === 0;
@@ -11,5 +11,5 @@ export const register = async (req, res) => {
   req.body.password = hashedPassword;
 
   const user = await User.create(req.body);
-  res.status(StatusCodes.CREATED).json({ msg: "User Created Successfully" });
+  res.status(StatusCodes.CREATED).json({ msg: "User Created Successfully", user });
 };
